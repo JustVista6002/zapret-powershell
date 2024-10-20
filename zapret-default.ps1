@@ -15,7 +15,6 @@ Write-Host "ZZZZZZZAPRET"
 Write-Host "github.com/sevcator/zapret-powershell"
 Write-Host "github.com/bol-van/zapret"
 Write-Host ""
-Write-Host "--- START INSTALLATION ---"
 
 function Check-Admin {
     $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
@@ -24,9 +23,11 @@ function Check-Admin {
 }
 
 if (-not (Check-Admin)) {
-    Write-Host "Run script as administrator." -ForegroundColor Red
-    return
+    Write-Host "Run script as administrator." -ForegroundColor Yellow
+    exit 1;
 }
+
+Write-Host "--- START INSTALLATION ---"
 
 Write-Host "Killing GoodbyeDPI and Zapret"
 
