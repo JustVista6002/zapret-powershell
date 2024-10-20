@@ -7,7 +7,9 @@
 <p align="center">Easily download zapret using Powershell script</p>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/Telegram%20Channel-white?style=plastic&logo=telegram" alt="Telegram Channel" />
+    <a href="https://t.me/sevcator">
+        <img src="https://img.shields.io/badge/Telegram%20Channel-white?style=plastic&logo=telegram" alt="Telegram Channel" />
+    </a>
 </p>
 
 1. Open Powershell as Administrator
