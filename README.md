@@ -3,3 +3,4 @@
 ```
 irm https://bit.ly/zapret-sevcator | iex
 ```
+3. Done
