@@ -1,2 +1,5 @@
-# zapret-powershell
-Install DPI Bypass easily using Powershell
+1. Open Powershell as Administrator
+2. Enter:
+```
+irm https://bit.ly/zapret-sevcator | iex
+```
