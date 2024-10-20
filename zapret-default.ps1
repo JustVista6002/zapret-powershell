@@ -1,3 +1,6 @@
+#
+# t.me/sevcator
+#
 Clear-Host
 
 Write-Host "ZZZZZZZ"
@@ -25,18 +28,15 @@ if (-not (Check-Admin)) {
     exit
 }
 
-# Killing GoodbyeDPI and Zapret
 Write-Host "Killing GoodbyeDPI and Zapret"
 
 $processesToKill = @("GoodbyeDPI.exe", "winws.exe", "zapret.exe")
 
 foreach ($process in $processesToKill) {
     try {
-        # Attempt to kill the process
         Stop-Process -Name $process -Force -ErrorAction Stop
         Write-Host "$process killed successfully."
     } catch {
-        # If the process cannot be found or stopped, provide feedback
         if ($_.Exception.Message -like "*not running*") {
             Write-Host "$process is not running." -ForegroundColor Yellow
         } else {
@@ -45,12 +45,10 @@ foreach ($process in $processesToKill) {
     }
 }
 
-# Stopping Services
 $servicesToStop = @("zapret", "winws1", "goodbyedpi", "windivert", "windivert14")
 foreach ($service in $servicesToStop) {
     Write-Host "Checking service: $service"
 
-    # Check if the service exists
     $serviceStatus = Get-Service -Name $service -ErrorAction SilentlyContinue
 
     if ($serviceStatus) {
@@ -63,7 +61,6 @@ foreach ($service in $servicesToStop) {
             Write-Host ("Failed to stop {0}: {1}" -f $service, $_.Exception.Message) -ForegroundColor Red
         }
         
-        # Delete the service
         try {
             sc.exe delete $service -ErrorAction Stop | Out-Null
             Write-Host "$service deleted successfully."
