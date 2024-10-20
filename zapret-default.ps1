@@ -25,7 +25,7 @@ function Check-Admin {
 
 if (-not (Check-Admin)) {
     Write-Host "Run script as administrator." -ForegroundColor Red
-    exit
+    return
 }
 
 Write-Host "Killing GoodbyeDPI and Zapret"
