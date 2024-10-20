@@ -23,8 +23,9 @@ function Check-Admin {
 }
 
 if (-not (Check-Admin)) {
-    Write-Host "Run script as administrator." -ForegroundColor Yellow
-    exit 1;
+    Add-Type -AssemblyName System.Windows.Forms 
+    [System.Windows.Forms.MessageBox]::Show("zapret-sevcator | Run as administrator rights!")
+    exit
 }
 
 Write-Host "--- START INSTALLATION ---"
