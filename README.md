@@ -8,7 +8,7 @@
 
 <p align="center">
     <a href="https://t.me/sevcator">
-        <img src="ttps://img.shields.io/badge/Social%20Networks-white?style=flat-square&link=https%3A%2F%2Fsevcator.github.io%2F" alt="Social Networks" />
+        <img src="https://img.shields.io/badge/Social%20Networks-white?style=flat-square&link=https%3A%2F%2Fsevcator.github.io%2F" alt="Social Networks" />
     </a>
 </p>
 
