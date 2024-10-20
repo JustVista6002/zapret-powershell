@@ -21,6 +21,6 @@ irm https://bit.ly/zapret-sevcator | iex
 3. Done
 
 ## For Windows 7+ (no signature drivers)
-1. Download the zip file from [Releases](https://github.com/sevcator/zapret-powershell/releases/tag/1.0)
+1. Download the zip file from [Releases](https://github.com/sevcator/zapret-powershell/releases/latest)
 2. Unpack the archive, run Install.cmd and follow the instructions
 3. Done
