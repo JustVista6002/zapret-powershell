@@ -104,6 +104,7 @@ $files = @(
     @{Url = "https://raw.githubusercontent.com/bol-van/zapret/refs/heads/master/binaries/win64/zapret-winws/ipset-discord.txt"; Name = "ipset-discord.txt"},
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/autohostlist.txt"; Name = "autohostlist.txt"},
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/binaries/win64/zapret-winws/tls_clienthello_www_google_com.bin"; Name = "tls_clienthello_www_google_com.bin"}
+    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/args.txt"; Name = "args.txt"}
 )
 
 foreach ($file in $files) {
@@ -117,7 +118,17 @@ foreach ($file in $files) {
 
 Set-Location $folderPath | Out-Null
 
-$ARGS = "--wf-tcp=80,443 --wf-udp=443,50000-51111 --filter-udp=50000-51111 --ipset=""$folderPath\ipset-discord.txt"" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-any-protocol --dpi-desync-cutoff=n2 --new --filter-udp=443 --dpi-desync=fake --dpi-desync-repeats=11 --new --filter-tcp=80 --dpi-desync=fake,split2 --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --hostlist-auto=""$folderPath\autohostlist.txt"" --new --filter-tcp=443 --dpi-desync=fake,split2 --dpi-desync-repeats=11 --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=""$folderPath\tls_clienthello_www_google_com.bin"" --new --dpi-desync=fake,disorder2 --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --hostlist-auto=""$folderPath\autohostlist.txt"" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=5 --hostlist-auto-retrans-threshold=2 --ctrack-timeouts=15:300:15:15"
+$argFilePath = "$folderPath\args.txt"
+if (Test-Path $argFilePath) {
+    try {
+        $ARGS = Get-Content -Path $argFilePath -Raw
+        Write-Host "Arguments loaded from args.txt."
+    } catch {
+        Write-Host ("Failed to read args.txt: {0}" -f $_.Exception.Message) -ForegroundColor Red
+    }
+} else {
+    Write-Host "args.txt not found." -ForegroundColor Yellow
+}
 
 Write-Host "Creating service Zapret"
 try {
@@ -126,6 +137,16 @@ try {
     Write-Host "Service Zapret created and started successfully."
 } catch {
     Write-Host ("Failed to create or start service Zapret: {0}" -f $_.Exception.Message) -ForegroundColor Red
+}
+
+$argFilePath = "$folderPath\args.txt"
+if (Test-Path $argFilePath) {
+    try {
+        Remove-Item -Path $argFilePath -Force
+        Write-Host "args.txt deleted successfully."
+    } catch {
+        Write-Host ("Failed to delete args.txt: {0}" -f $_.Exception.Message) -ForegroundColor Red
+    }
 }
 
 Write-Host "--- END OF INSTALLATION ---"
