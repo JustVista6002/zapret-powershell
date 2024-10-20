@@ -119,10 +119,15 @@ foreach ($file in $files) {
 Set-Location $folderPath | Out-Null
 
 $argFilePath = "$folderPath\args.txt"
+
 if (Test-Path $argFilePath) {
     try {
-        $ARGS = Get-Content -Path $argFilePath -Raw
+        # Read the entire content of args.txt in one go
+        $ARGS1 = Get-Content -Path $argFilePath -Raw
         Write-Host "Arguments loaded from args.txt."
+
+        # Replace instances of $folderPath\ with the actual value of $folderPath
+        $ARGS1 = $ARGS1 -replace '\$folderPath', $folderPath
     } catch {
         Write-Host ("Failed to read args.txt: {0}" -f $_.Exception.Message) -ForegroundColor Red
     }
@@ -130,21 +135,16 @@ if (Test-Path $argFilePath) {
     Write-Host "args.txt not found." -ForegroundColor Yellow
 }
 
-Write-Host "Waiting 2 seconds"
-Start-Sleep -Seconds 2
+$ARGS = $ARGS1
 
 Write-Host "Creating service Zapret"
 try {
-    Write-Host "Command to service: $folderPath\winws.exe $ARGS"
     sc.exe create winws1 binPath= "$folderPath\winws.exe $ARGS" DisplayName= "zapret DPI bypass" start= auto | Out-Null
     sc.exe start winws1 | Out-Null
     Write-Host "Service Zapret created and started successfully."
 } catch {
     Write-Host ("Failed to create or start service Zapret: {0}" -f $_.Exception.Message) -ForegroundColor Red
 }
-
-Write-Host "Waiting 2 seconds"
-Start-Sleep -Seconds 2
 
 $argFilePath = "$folderPath\args.txt"
 if (Test-Path $argFilePath) {
