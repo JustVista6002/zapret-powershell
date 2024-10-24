@@ -31,6 +31,14 @@ $initialDirectory = Get-Location
 
 Write-Host "--- START INSTALLATION ---"
 
+$os = Get-CimInstance -ClassName Win32_OperatingSystem
+
+if ($os.Version -ge "10.0") {
+    Write-Host "Windows version is 10 or later."
+} else {
+    Write-Host "Windows version is earlier than 10."
+}
+
 Write-Host "Killing GoodbyeDPI and Zapret"
 
 $processesToKill = @("GoodbyeDPI.exe", "winws.exe", "zapret.exe")
