@@ -1,5 +1,5 @@
 #
-# t.me/sevcator
+# sevcator.github.io
 #
 Clear-Host
 
