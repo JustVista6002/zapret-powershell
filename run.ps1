@@ -103,10 +103,10 @@ $files = @(
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/binaries/win64/zapret-winws/cygwin1.dll"; Name = "cygwin1.dll"},
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/binaries/win64/zapret-winws/winws.exe"; Name = "winws.exe"},
     @{Url = "https://raw.githubusercontent.com/bol-van/zapret/refs/heads/master/binaries/win64/zapret-winws/ipset-discord.txt"; Name = "ipset-discord.txt"},
-    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/autohostlist.txt"; Name = "autohostlist.txt"},
+    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/autohostlist.txt"; Name = "autohostlist.txt"},
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/binaries/win64/zapret-winws/tls_clienthello_www_google_com.bin"; Name = "tls_clienthello_www_google_com.bin"}
-    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/args.txt"; Name = "args.txt"}
-    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/uninstall.cmd"; Name = "uninstall.cmd"}
+    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/args.txt"; Name = "args.txt"}
+    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/uninstall.cmd"; Name = "uninstall.cmd"}
 )
 
 foreach ($file in $files) {
