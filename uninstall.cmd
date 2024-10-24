@@ -1,25 +1,25 @@
 @echo off
 title Uninstallation zapret-powershell
 
-echo "  ______                         _   "
-echo " |___  /                        | |  "
-echo "    / /  __ _  _ __   _ __  ___ | |_ "
-echo "   / /  / _` || '_ \ | '__|/ _ \| __|"
-echo "  / /__| (_| || |_) || |  |  __/| |_ "
-echo " /_____|\__,_|| .__/ |_|   \___| \__|"
-echo "              | |                    "
-echo "              |_|                    "
-echo "Script - github.com/sevcator/zapret-powershell"
-echo "Zapret - github.com/bol-van/zapret"
+echo Z)zzzzzz                           t)   
+echo       Z)                         t)tTTT 
+echo     Z) a)AAAA p)PPPP  r)RRR e)EEEEEt)   
+echo    Z)   a)AAA p)   PPr)   RRe)EEEE t)   
+echo  Z)    a)   A p)   PPr)     e)     t)   
+echo Z)zzzzzza)AAAAp)PPPP r)      e)EEEEt)T  
+echo               p)                        
+echo               p)           
+echo Script - github.com/sevcator/zapret-powershell
+echo Zapret - github.com/bol-van/zapret
 echo.
-cd "C:\Windows\System32"
 
 net session >nul 2>&1
 if %errorLevel% neq 0 (
-    echo "You must run this script with administrative privileges to countinue."
+    echo You must run this script with administrative privileges to countinue.
     exit /b
 )
 
+cd "C:\Windows\System32"
 echo Killing processes
 taskkill /F /IM winws.exe /T >nul 2>&1
 
