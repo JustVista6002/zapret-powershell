@@ -3,17 +3,16 @@
 #
 Clear-Host
 
-Write-Host "ZZZZZZZ"
-Write-Host "      Z"
-Write-Host "     Z "
-Write-Host "    Z  "
-Write-Host "   Z   "
-Write-Host "  Z    "
-Write-Host " Z     "
-Write-Host "Z      "
-Write-Host "ZZZZZZZAPRET"
-Write-Host "github.com/sevcator/zapret-powershell"
-Write-Host "github.com/bol-van/zapret"
+Write-Host "  ______                         _   "
+Write-Host " |___  /                        | |  "
+Write-Host "    / /  __ _  _ __   _ __  ___ | |_ "
+Write-Host "   / /  / _` || '_ \ | '__|/ _ \| __|"
+Write-Host "  / /__| (_| || |_) || |  |  __/| |_ "
+Write-Host " /_____|\__,_|| .__/ |_|   \___| \__|"
+Write-Host "              | |                    "
+Write-Host "              |_|                    "
+Write-Host "Script - github.com/sevcator/zapret-powershell"
+Write-Host "Zapret - github.com/bol-van/zapret"
 Write-Host ""
 
 function Check-Admin {
@@ -105,6 +104,7 @@ $files = @(
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/autohostlist.txt"; Name = "autohostlist.txt"},
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/binaries/win64/zapret-winws/tls_clienthello_www_google_com.bin"; Name = "tls_clienthello_www_google_com.bin"}
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/args.txt"; Name = "args.txt"}
+    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/uninstall.cmd"; Name = "uninstall.cmd"}
 )
 
 foreach ($file in $files) {
