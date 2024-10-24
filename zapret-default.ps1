@@ -27,6 +27,8 @@ if (-not (Check-Admin)) {
     exit
 }
 
+$initialDirectory = Get-Location
+
 Write-Host "--- START INSTALLATION ---"
 
 Write-Host "Killing GoodbyeDPI and Zapret"
@@ -41,7 +43,7 @@ foreach ($process in $processesToKill) {
         if ($_.Exception.Message -like "*not running*") {
             Write-Host "$process is not running." -ForegroundColor Yellow
         } else {
-            Write-Host ("Failed to kill {0}: {1}" -f $process, $_.Exception.Message) -ForegroundColor Red
+            Write-Host ("Failed to kill {0}: {1}" -f $process, $_.Exception.Message) -ForegroundColor Yellow
         }
     }
 }
@@ -158,5 +160,8 @@ if (Test-Path $argFilePath) {
 
 Write-Host "--- END OF INSTALLATION ---"
 Write-Host ""
-Write-Host "Done!"
-Write-Host "Please, follow my Telegram channel - t.me/sevcator"
+Write-Host "Done! Now enjoy."
+Write-Host "Follow me - sevcator.github.io"
+Write-Host ""
+Write-Host "To remove zapret run script located in $folderPath\uninstall.cmd as administrator!"
+Set-Location $initialDirectory
