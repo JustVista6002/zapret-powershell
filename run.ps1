@@ -31,13 +31,14 @@ $initialDirectory = Get-Location
 
 Write-Host "--- START INSTALLATION ---"
 
-$os = Get-CimInstance -ClassName Win32_OperatingSystem
+$computerInfo = Get-ComputerInfo
 
-if ($os.Version -ge "10.0") {
-    Write-Host "Windows version is 10 or later."
+# Check for Windows version 10 or 11
+if ($computerInfo.WindowsVersion -ge "10.0" -and $computerInfo.WindowsVersion -lt "12.0") {
+    Write-Host "Windows version is 10 or 11."
 } else {
-    Add-Type -AssemblyName System.Windows.Forms 
-    [System.Windows.Forms.MessageBox]::Show("zapret-sevcator | Windows version is earlier than 10.")
+    Add-Type -AssemblyName System.Windows.Forms
+    [System.Windows.Forms.MessageBox]::Show("zapret-sevcator | Windows version is earlier than 10 or later than 11.")
     exit
 }
 
