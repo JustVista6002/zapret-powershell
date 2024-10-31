@@ -31,15 +31,14 @@ $initialDirectory = Get-Location
 
 Write-Host "--- START INSTALLATION ---"
 
-$computerInfo = Get-ComputerInfo
+$version = [System.Environment]::OSVersion.Version
 
-# Check for Windows version 10 or 11
-if ($computerInfo.WindowsVersion -ge "10.0" -and $computerInfo.WindowsVersion -lt "12.0") {
-    Write-Host "Windows version is 10 or 11."
+$windows10Version = New-Object System.Version(10, 0)
+
+if ($version -gt $windows10Version) {
+    Write-Output "The Windows version is later than Windows 10: $version"
 } else {
-    Add-Type -AssemblyName System.Windows.Forms
-    [System.Windows.Forms.MessageBox]::Show("zapret-sevcator | Windows version is earlier than 10 or later than 11.")
-    exit
+    Write-Output "The Windows version is Windows 10 or earlier: $version"
 }
 
 Write-Host "Killing GoodbyeDPI and Zapret"
