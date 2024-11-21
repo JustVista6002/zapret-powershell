@@ -154,4 +154,11 @@ Write-Host "Follow me ** sevcator.github.io"
 Write-Host ""
 Write-Host "To remove Zapret,"
 Write-Host "run script located in $folderPath\uninstall.cmd as administrator!"
+Write-Host ""
+Write-Host "--- NOTES ---" -ForegroundColor Yellow
+Write-Host ""
+Write-Host "!! Have a problems with YouTube and something? Try fix your browser: set to default flags in experemental features (if you do something) or enable Secure DNS (example: 1.1.1.1 or OpenDNS)" -ForegroundColor Yellow
+Write-Host "!! If Discord stucks on 'Checking for updates...' terminate process and open again" -ForegroundColor Yellow
+Write-Host ""
+Write-Host "!!! On some providers this DPI Bypass may not working! Uninstall and use VPN or something else." -ForegroundColor Yellow
 Set-Location $initialDirectory
