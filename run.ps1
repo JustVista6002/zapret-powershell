@@ -17,6 +17,7 @@ Write-Host "              | |                    "
 Write-Host "              |_|                    "
 Write-Host "** github.com/sevcator/zapret-powershell"
 Write-Host "** github.com/bol-van/zapret"
+Write-Host "** github.com/bol-van/zapret-win-bundle"
 Write-Host ""
 
 function Check-Admin {
@@ -150,15 +151,16 @@ try {
 Write-Host "--- END OF INSTALLATION ---"
 Write-Host ""
 Write-Host "Done! Now enjoy."
-Write-Host "Follow me ** sevcator.github.io"
 Write-Host ""
-Write-Host "To remove Zapret,"
-Write-Host "run script located in $folderPath\uninstall.cmd as administrator!"
+Write-Host "To remove Zapret, run script located in $folderPath\uninstall.cmd as administrator!"
 Write-Host ""
 Write-Host "--- NOTES ---" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "!! Have a problems with YouTube and something? Try fix your browser: set to default flags in experemental features (if you do something) or enable Secure DNS (example: 1.1.1.1 or OpenDNS)" -ForegroundColor Yellow
-Write-Host "!! If Discord stucks on 'Checking for updates...' terminate process and open again" -ForegroundColor Yellow
+Write-Host "!! Have a problems with YouTube and something? Try fix your browser: set to default flags in experemental features (if you do something) or enable Secure DNS (example: 1.1.1.1 or OpenDNS)." -ForegroundColor Yellow
+Write-Host "!! If Discord stucks on 'Checking for updates...' terminate process and open again." -ForegroundColor Yellow
 Write-Host ""
-Write-Host "!!! On some providers this DPI Bypass may not working! Uninstall and use VPN or something else." -ForegroundColor Yellow
+Write-Host "!!! On some providers this DPI Bypass may not working! Uninstall and use VPN or something else. (try other zapret)" -ForegroundColor Yellow
+Write-Host ""
+Write-Host "Follow me ** sevcator.github.io"
+Write-Host ""
 Set-Location $initialDirectory
