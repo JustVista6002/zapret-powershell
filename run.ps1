@@ -101,7 +101,7 @@ $exclusionPath = "$folderPath\winws.exe"
 
 if (-not (Test-Path $exclusionPath)) {
     New-Item -Path $exclusionPath -ItemType File | Out-Null
-    Write-Host "$exclusionPath: Created"
+    Write-Host "${exclusionPath}: Created"
 } else {
     Write-Host "${exclusionPath}: Already exists" -ForegroundColor Yellow
 }
