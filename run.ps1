@@ -48,10 +48,10 @@ $processesToKill = @("GoodbyeDPI.exe", "winws.exe", "zapret.exe")
 foreach ($process in $processesToKill) {
     try {
         Stop-Process -Name $process -Force -ErrorAction Stop
-        Write-Host "$process: Killed"
+        Write-Host "${process}: Killed"
     } catch {
         if ($_.Exception.Message -like "*not running*") {
-            Write-Host "$process: Process not found" -ForegroundColor White
+            Write-Host "${process}: Process not found" -ForegroundColor White
         } else {
             Write-Host ("{0}: {1}" -f $process, $_.Exception.Message) -ForegroundColor White
         }
@@ -64,23 +64,23 @@ foreach ($service in $servicesToStop) {
     $serviceStatus = Get-Service -Name $service -ErrorAction SilentlyContinue
 
     if ($serviceStatus) {
-        Write-Host "$service: Stopping"
+        Write-Host "${service}: Stopping"
         # Stop the service and handle potential errors
         try {
             Stop-Service -Name $service -Force -ErrorAction Stop
-            Write-Host "$service: Stopped successfully"
+            Write-Host "${service}: Stopped successfully"
         } catch {
             Write-Host ("{0}: {1}" -f $service, $_.Exception.Message) -ForegroundColor Red
         }
         
         try {
             sc.exe delete $service -ErrorAction Stop | Out-Null
-            Write-Host "$service: Deleted"
+            Write-Host "${service}: Deleted"
         } catch {
             Write-Host ("{0}: {1}" -f $service, $_.Exception.Message) -ForegroundColor Red
         }
     } else {
-        Write-Host "$service: Not found" -ForegroundColor White
+        Write-Host "${service}: Not found" -ForegroundColor White
     }
 }
 
