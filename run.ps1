@@ -5,7 +5,7 @@ Clear-Host
 
 # Modifable vars
 $folderPath = "C:\Windows\Zapret"
-$ARGS = "--wf-tcp=80-443 --wf-udp=80-443,50000-50099 --filter-tcp=80-443 --hostlist=`"$folderPath\autohostlist.txt`" --dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=5 --hostlist-auto-retrans-threshold=2 --new --filter-udp=50000-50099 --ipset=`"$folderPath\ipset-discord.txt`" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-any-protocol --dpi-desync-cutoff=n4 --filter-udp=80-443 --dpi-desync=fake --dpi-desync-repeats=11 --hostlist=`"$folderPath\autohostlist.txt`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=5 --hostlist-auto-retrans-threshold=2"
+$ARGS = "--wf-tcp=80-443 --wf-udp=80-443,50000-50099 --filter-tcp=80-443 --hostlist=`"$folderPath\autohostlist.txt`" --dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --dpi-desync-fake-quic=`"$folderPath\quic_initial_www_google_com.bin`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=5 --hostlist-auto-retrans-threshold=2 --new --filter-udp=80-443,50000-50099 --ipset=`"$folderPath\ipset-discord.txt`" --dpi-desync-any-protocol --dpi-desync-cutoff=n4"
 
 Write-Host "  ______                         _   "
 Write-Host " |___  /                        | |  "
@@ -16,7 +16,7 @@ Write-Host " /_____|\__,_|| .__/ |_|   \___| \__|"
 Write-Host "              | |                    "
 Write-Host "              |_|                    "
 Write-Host "** github.com/sevcator/zapret-powershell"
-Write-Host "** github.com/bol-van/zapret ☆"
+Write-Host "** github.com/bol-van/zapret"
 Write-Host ""
 
 function Check-Admin {
@@ -82,7 +82,8 @@ foreach ($service in $servicesToStop) {
             sc.exe delete $service -ErrorAction Stop | Out-Null
             Write-Host "${service}: Deleted"
         } catch {
-            Write-Host ("{0}: {1}" -f $service, $_.Exception.Message) -ForegroundColor Red
+            Write-Host ("{0}: {1}" -f $service, $_.Exception.Message) -ForegroundColor Yellow
+	    Write-Host "If you have problems, try restart your machine!" -ForegroundColor Yellow
         }
     } else {
         Write-Host "${service}: Not found" -ForegroundColor White
@@ -109,8 +110,6 @@ if (-not (Test-Path $exclusionPath)) {
 try {
     Add-MpPreference -ExclusionPath $exclusionPath
     Write-Host "${exclusionPath}: Added to exclusions in Windows Defender"
-	
-    Write-Host "Delay..."
     Start-Sleep -Seconds 5
 } catch {
     Write-Host ("${exclusionPath}: Error to add exclusion - {0}" -f $_.Exception.Message) -ForegroundColor Red
