@@ -3,6 +3,10 @@
 #
 Clear-Host
 
+# Modifable vars
+$folderPath = "C:\Windows\Zapret"
+$ARGS = "--wf-tcp=80-443 --wf-udp=80-443,50000-50099 --filter-tcp=80-443 --hostlist=`"$folderPath\autohostlist.txt`" --dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=5 --hostlist-auto-retrans-threshold=2 --new --filter-udp=50000-50099 --ipset=`"$folderPath\ipset-discord.txt`" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-any-protocol --dpi-desync-cutoff=n4 --filter-udp=80-443 --dpi-desync=fake --dpi-desync-repeats=11 --hostlist=`"$folderPath\autohostlist.txt`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=5 --hostlist-auto-retrans-threshold=2"
+
 Write-Host "  ______                         _   "
 Write-Host " |___  /                        | |  "
 Write-Host "    / /  __ _  _ __   _ __  ___ | |_ "
@@ -85,7 +89,6 @@ foreach ($service in $servicesToStop) {
     }
 }
 
-$folderPath = "C:\Windows\Zapret"
 if (Test-Path $folderPath) {
     Get-ChildItem -Path $folderPath | Remove-Item -Force -ErrorAction SilentlyContinue | Out-Null
 }
@@ -136,8 +139,6 @@ foreach ($file in $files) {
 }
 
 Set-Location $folderPath | Out-Null
-
-$ARGS = "--wf-tcp=80-443 --wf-udp=80-443,50000-50099 --filter-tcp=80-443 --hostlist=`"$folderPath\autohostlist.txt`" --dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=5 --hostlist-auto-retrans-threshold=2 --new --filter-udp=50000-50099 --ipset=`"$folderPath\ipset-discord.txt`" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-any-protocol --dpi-desync-cutoff=n4 --filter-udp=80-443 --dpi-desync=fake --dpi-desync-repeats=11 --hostlist=`"$folderPath\autohostlist.txt`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=5 --hostlist-auto-retrans-threshold=2"
 
 try {
     sc.exe create winws1 binPath= "`"$folderPath\winws.exe $ARGS`"" DisplayName= "zapret DPI bypass" start= auto | Out-Null
