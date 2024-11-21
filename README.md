@@ -23,8 +23,3 @@ or
 irm https://sevcator.github.io/zapret-powershell/run.ps1 | iex
 ```
 3. Done
-
-## For Windows 7+ (no signature drivers)
-1. Download the zip file from [Releases](https://github.com/sevcator/zapret-powershell/releases/latest)
-2. Unpack the archive, run Install.cmd and follow the instructions
-3. Done
