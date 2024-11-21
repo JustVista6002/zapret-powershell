@@ -103,17 +103,17 @@ if (-not (Test-Path $exclusionPath)) {
     New-Item -Path $exclusionPath -ItemType File | Out-Null
     Write-Host "$exclusionPath: Created"
 } else {
-    Write-Host "$exclusionPath: Already exists" -ForegroundColor Yellow
+    Write-Host "${exclusionPath}: Already exists" -ForegroundColor Yellow
 }
 
 try {
     Add-MpPreference -ExclusionPath $exclusionPath
-    Write-Host "$exclusionPath: Added to exclusions in Windows Defender"
+    Write-Host "${exclusionPath}: Added to exclusions in Windows Defender"
 	
     Write-Host "Delay..."
     Start-Sleep -Seconds 5
 } catch {
-    Write-Host ("$exclusionPath: Error to add exclusion - {0}" -f $_.Exception.Message) -ForegroundColor Red
+    Write-Host ("${exclusionPath}: Error to add exclusion - {0}" -f $_.Exception.Message) -ForegroundColor Red
 }
 
 
