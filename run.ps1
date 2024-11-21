@@ -11,8 +11,8 @@ Write-Host "  / /__| (_| || |_) || |  |  __/| |_ "
 Write-Host " /_____|\__,_|| .__/ |_|   \___| \__|"
 Write-Host "              | |                    "
 Write-Host "              |_|                    "
-Write-Host "Script - github.com/sevcator/zapret-powershell"
-Write-Host "Zapret - github.com/bol-van/zapret"
+Write-Host "☆ github.com/sevcator/zapret-powershell"
+Write-Host "☆ github.com/bol-van/zapret ☆"
 Write-Host ""
 
 function Check-Admin {
@@ -24,7 +24,7 @@ function Check-Admin {
 if (-not (Check-Admin)) {
     Add-Type -AssemblyName System.Windows.Forms 
     [System.Windows.Forms.MessageBox]::Show("zapret-sevcator | Run as administrator rights!")
-    exit
+    return
 }
 
 $initialDirectory = Get-Location
@@ -41,47 +41,46 @@ if ($version -gt $windows10Version) {
     Write-Output "The Windows version is Windows 10 or earlier: $version"
 }
 
-Write-Host "Killing GoodbyeDPI and Zapret"
+Write-Host "Terminating processes"
 
 $processesToKill = @("GoodbyeDPI.exe", "winws.exe", "zapret.exe")
 
 foreach ($process in $processesToKill) {
     try {
         Stop-Process -Name $process -Force -ErrorAction Stop
-        Write-Host "$process killed successfully."
+        Write-Host "$process: Killed"
     } catch {
         if ($_.Exception.Message -like "*not running*") {
-            Write-Host "$process is not running." -ForegroundColor Yellow
+            Write-Host "$process: Process not found" -ForegroundColor White
         } else {
-            Write-Host ("Failed to kill {0}: {1}" -f $process, $_.Exception.Message) -ForegroundColor Yellow
+            Write-Host ("{0}: {1}" -f $process, $_.Exception.Message) -ForegroundColor White
         }
     }
 }
 
+Write-Host "Checking services"
 $servicesToStop = @("zapret", "winws1", "goodbyedpi", "windivert", "windivert14")
 foreach ($service in $servicesToStop) {
-    Write-Host "Checking service: $service"
-
     $serviceStatus = Get-Service -Name $service -ErrorAction SilentlyContinue
 
     if ($serviceStatus) {
-        Write-Host "Stopping $service"
+        Write-Host "$service: Stopping"
         # Stop the service and handle potential errors
         try {
             Stop-Service -Name $service -Force -ErrorAction Stop
-            Write-Host "$service stopped successfully."
+            Write-Host "$service: Stopped successfully"
         } catch {
-            Write-Host ("Failed to stop {0}: {1}" -f $service, $_.Exception.Message) -ForegroundColor Red
+            Write-Host ("{0}: {1}" -f $service, $_.Exception.Message) -ForegroundColor Red
         }
         
         try {
             sc.exe delete $service -ErrorAction Stop | Out-Null
-            Write-Host "$service deleted successfully."
+            Write-Host "$service: Deleted"
         } catch {
-            Write-Host ("Failed to delete {0}: {1}" -f $service, $_.Exception.Message) -ForegroundColor Red
+            Write-Host ("{0}: {1}" -f $service, $_.Exception.Message) -ForegroundColor Red
         }
     } else {
-        Write-Host "$service does not exist or is not running." -ForegroundColor Yellow
+        Write-Host "$service: Not found" -ForegroundColor White
     }
 }
 
@@ -122,9 +121,9 @@ $files = @(
 foreach ($file in $files) {
     try {
         Invoke-WebRequest -Uri $file.Url -OutFile "$folderPath\$($file.Name)" -ErrorAction Stop | Out-Null
-        Write-Host "$($file.Name) downloaded successfully."
+        Write-Host "$($file.Name): Downloaded"
     } catch {
-        Write-Host ("Failed to download {0}: {1}" -f $($file.Name), $_.Exception.Message) -ForegroundColor Red
+        Write-Host ("{0}: {1}" -f $($file.Name), $_.Exception.Message) -ForegroundColor Red
     }
 }
 
@@ -136,15 +135,15 @@ Write-Host "Creating service Zapret"
 try {
     sc.exe create winws1 binPath= "`"$folderPath\winws.exe $ARGS`"" DisplayName= "zapret DPI bypass" start= auto | Out-Null
     sc.exe start winws1 | Out-Null
-    Write-Host "Service Zapret created and started successfully."
+    Write-Host "Service created and started!"
 } catch {
-    Write-Host ("Failed to create or start service Zapret: {0}" -f $_.Exception.Message) -ForegroundColor Red
+    Write-Host ("Failed to create or start service: {0}" -f $_.Exception.Message) -ForegroundColor Red
 }
 
 Write-Host "--- END OF INSTALLATION ---"
 Write-Host ""
 Write-Host "Done! Now enjoy."
-Write-Host "Follow me - sevcator.github.io"
+Write-Host "Follow me ☆ sevcator.github.io"
 Write-Host ""
 Write-Host "To remove zapret run script located in $folderPath\uninstall.cmd as administrator!"
 Set-Location $initialDirectory
