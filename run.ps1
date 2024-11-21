@@ -116,7 +116,6 @@ $files = @(
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/autohostlist.txt"; Name = "autohostlist.txt"},
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/files/fake/tls_clienthello_www_google_com.bin"; Name = "tls_clienthello_www_google_com.bin"}
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/files/fake/quic_initial_www_google_com.bin"; Name = "quic_initial_www_google_com.bin"}
-    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/args.txt"; Name = "args.txt"}
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/uninstall.cmd"; Name = "uninstall.cmd"}
 )
 
@@ -131,42 +130,15 @@ foreach ($file in $files) {
 
 Set-Location $folderPath | Out-Null
 
-$argFilePath = "$folderPath\args.txt"
-
-if (Test-Path $argFilePath) {
-    try {
-        # Read the entire content of args.txt in one go
-        $ARGS1 = Get-Content -Path $argFilePath -Raw
-        Write-Host "Arguments loaded from args.txt."
-
-        # Replace instances of $folderPath\ with the actual value of $folderPath
-        $ARGS1 = $ARGS1 -replace '\$folderPath', $folderPath
-    } catch {
-        Write-Host ("Failed to read args.txt: {0}" -f $_.Exception.Message) -ForegroundColor Red
-    }
-} else {
-    Write-Host "args.txt not found." -ForegroundColor Yellow
-}
-
-$ARGS = $ARGS1
+$ARGS = "--wf-tcp=80-443 --wf-udp=80-443,50000-50099 --filter-tcp=80-443 --hostlist=`"$folderPath\autohostlist.txt`" --dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=5 --hostlist-auto-retrans-threshold=2 --new --filter-udp=50000-50099 --ipset=`"$folderPath\ipset-discord.txt`" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-any-protocol --dpi-desync-cutoff=n4 --filter-udp=80-443 --dpi-desync=fake --dpi-desync-repeats=11 --hostlist=`"$folderPath\autohostlist.txt`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=5 --hostlist-auto-retrans-threshold=2"
 
 Write-Host "Creating service Zapret"
 try {
-    sc.exe create winws1 binPath= "$folderPath\winws.exe $ARGS" DisplayName= "zapret DPI bypass" start= auto | Out-Null
+    sc.exe create winws1 binPath= "`"$folderPath\winws.exe $ARGS`"" DisplayName= "zapret DPI bypass" start= auto | Out-Null
     sc.exe start winws1 | Out-Null
     Write-Host "Service Zapret created and started successfully."
 } catch {
     Write-Host ("Failed to create or start service Zapret: {0}" -f $_.Exception.Message) -ForegroundColor Red
-}
-
-$argFilePath = "$folderPath\args.txt"
-if (Test-Path $argFilePath) {
-    try {
-        Remove-Item -Path $argFilePath -Force
-        Write-Host "args.txt deleted successfully."
-    } catch {
-        Write-Host ("Failed to delete args.txt: {0}" -f $_.Exception.Message) -ForegroundColor Red
-    }
 }
 
 Write-Host "--- END OF INSTALLATION ---"
