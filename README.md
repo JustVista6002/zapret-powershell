@@ -14,12 +14,5 @@
 
 ## For Windows 10-11
 1. Open Powershell as Administrator
-2. Enter:
-```
-irm https://tinyurl.com/zapret-powershell | iex
-```
-or
-```
-irm https://sevcator.github.io/zapret-powershell/run.ps1 | iex
-```
+2. Enter: ```irm https://cutt.ly/zapret-ps | iex```
 3. Done
