@@ -7,14 +7,14 @@ Clear-Host
 $folderPath = "C:\Windows\Zapret"
 $ARGS = "--wf-tcp=80-443 --wf-udp=80-443,50000-50099 --filter-tcp=80-443 --hostlist-auto=`"$folderPath\autohostlist.txt`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=60 --hostlist-auto-retrans-threshold=2 --dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --dpi-desync-fake-quic=`"$folderPath\quic_initial_www_google_com.bin`" --new --filter-udp=50000-50099 --ipset=`"$folderPath\ipset-discord.txt`" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-any-protocol --dpi-desync-cutoff=n4 --new --filter-udp=80-443 --hostlist-auto=`"$folderPath\autohostlist.txt`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=60 --hostlist-auto-retrans-threshold=2 --dpi-desync=fake --dpi-desync-repeats=11 --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --dpi-desync-fake-quic=`"$folderPath\quic_initial_www_google_com.bin`""
 
-Write-Host "  ______                         _   "
-Write-Host " |___  /                        | |  "
-Write-Host "    / /  __ _  _ __   _ __  ___ | |_ "
-Write-Host "   / /  / _` || '_ \ | '__|/ _ \| __|"
-Write-Host "  / /__| (_| || |_) || |  |  __/| |_ "
-Write-Host " /_____|\__,_|| .__/ |_|   \___| \__|"
-Write-Host "              | |                    "
-Write-Host "              |_|                    "
+Write-Host "  ______                         _   " -ForegroundColor Cyan
+Write-Host " |___  /                        | |  " -ForegroundColor Cyan
+Write-Host "    / /  __ _  _ __   _ __  ___ | |_ " -ForegroundColor Cyan
+Write-Host "   / /  / _` || '_ \ | '__|/ _ \| __|" -ForegroundColor Cyan
+Write-Host "  / /__| (_| || |_) || |  |  __/| |_ " -ForegroundColor Cyan
+Write-Host " /_____|\__,_|| .__/ |_|   \___| \__|" -ForegroundColor Cyan
+Write-Host "              | |                    " -ForegroundColor Cyan
+Write-Host "              |_|                    " -ForegroundColor Cyan
 Write-Host "** github.com/sevcator/zapret-powershell"
 Write-Host "** github.com/bol-van/zapret"
 Write-Host "** github.com/bol-van/zapret-win-bundle"
@@ -41,7 +41,7 @@ $version = [System.Environment]::OSVersion.Version
 $windows10Version = New-Object System.Version(10, 0)
 
 if ($version -gt $windows10Version) {
-    Write-Output "Windows: $version"
+    Write-Output "Windows version: $version"
 } else {
     Write-Host "Your version of Windows is old!" -ForegroundColor White
     return
@@ -153,7 +153,7 @@ Write-Host ""
 Write-Host "Done! Now enjoy."
 Write-Host "To remove Zapret, run script located in $folderPath\uninstall.cmd as administrator!" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "--- NOTES ---" -ForegroundColor Gray
+Write-Host "--- NOTES ---"
 Write-Host ""
 Write-Host "!! Have a problems with YouTube and something? Try fix your browser: set to default flags in experemental features (if you do something) or enable Secure DNS (example: 1.1.1.1 or OpenDNS)" -ForegroundColor Gray
 Write-Host "!! If Discord stucks on 'Checking for updates...' terminate process and open again" -ForegroundColor Gray
