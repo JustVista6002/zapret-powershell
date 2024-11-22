@@ -4,7 +4,7 @@
 <p align="center"><img src="https://raw.githubusercontent.com/gist/Xainey/d5bde7d01dcbac51ac951810e94313aa/raw/6c858c46726541b48ddaaebab29c41c07a196394/PowerShell.svg" alt="Powershell"></p>
 <h1 align="center">zapret-powershell</h1>
 
-<p align="center">Easily download zapret using PowerShell/CMD script</p>
+<p align="center">Easily download zapret using PowerShell script</p>
 
 <p align="center">
     <a href="https://sevcator.github.io/">
