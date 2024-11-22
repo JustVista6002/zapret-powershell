@@ -36,7 +36,10 @@ sc delete windivert >nul 2>&1
 sc delete windivert14 >nul 2>&1
 
 echo Cleaning Zapret folder
-set "folderPath=C:\Windows\Zapret"
-if exist "%folderPath%" rd /s /q "%folderPath%"
+set "folderPath=C:\Windows\Zapret" >nul 2>&1
+if exist "%folderPath%" rd /s /q "%folderPath%" >nul 2>&1
+
+echo Done!
+echo.
 
 echo Done
