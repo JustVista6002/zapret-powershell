@@ -43,7 +43,7 @@ $windows10Version = New-Object System.Version(10, 0)
 if ($version -gt $windows10Version) {
     Write-Output "Windows: $version"
 } else {
-    Write-Host "Your version is Windows old!" -ForegroundColor White
+    Write-Host "Your version of Windows is old!" -ForegroundColor White
     return
 }
 
