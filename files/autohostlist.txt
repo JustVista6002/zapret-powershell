@@ -35,3 +35,5 @@ discord-attachments-uploads-prd.storage.googleapis.com
 7tv.io
 10tv.app
 soundcloud.com
+sndcdn.com
+soundcloud.cloud
