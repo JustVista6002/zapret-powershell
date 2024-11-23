@@ -1,4 +1,5 @@
 googlevideo.com
+googlesyndication.com
 youtu.be
 youtube.com
 youtubei.googleapis.com
