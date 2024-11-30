@@ -6,9 +6,9 @@ Clear-Host
 # Modifable vars
 $folderPath = "C:\Windows\Zapret"
 $ARGS = "--wf-tcp=80,443 --wf-udp=80,443,50000-50099 "
-$ARGS += "--filter-tcp=80,443 --hostlist-auto=`"$folderPath\autohostlist.txt`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=60 --hostlist-auto-retrans-threshold=2 --dpi-desync=fake --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --dpi-desync-fake-quic=`"$folderPath\quic_initial_www_google_com.bin`" --new "
-$ARGS += "--filter-udp=50000-50099 --ipset=`"$folderPath\ipset-discord.txt`" --dpi-desync=fake --dpi-desync-any-protocol --dpi-desync-repeats=6 --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --dpi-desync-fake-quic=`"$folderPath\quic_initial_www_google_com.bin`" --new "
-$ARGS += "--filter-udp=80,443 --hostlist-auto=`"$folderPath\autohostlist.txt`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=60 --hostlist-auto-retrans-threshold=2 --dpi-desync=fake,split2 --dpi-desync-repeats=11 --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --dpi-desync-fake-quic=`"$folderPath\quic_initial_www_google_com.bin`""
+$ARGS += "--filter-tcp=80,443 --hostlist-auto=\"$folderPath\autohostlist.txt\" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=60 --hostlist-auto-retrans-threshold=2 --dpi-desync=fake --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=\"$folderPath\tls_clienthello_www_google_com.bin\" --dpi-desync-fake-quic=\"$folderPath\quic_initial_www_google_com.bin\" --new "
+$ARGS += "--filter-udp=50000-50099 --ipset=\"$folderPath\ipset-discord.txt\" --dpi-desync=fake --dpi-desync-any-protocol --dpi-desync-repeats=6 --dpi-desync-fake-tls=\"$folderPath\tls_clienthello_www_google_com.bin\" --dpi-desync-fake-quic=\"$folderPath\quic_initial_www_google_com.bin\" --new "
+$ARGS += "--filter-udp=80,443 --hostlist-auto=\"$folderPath\autohostlist.txt\" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=60 --hostlist-auto-retrans-threshold=2 --dpi-desync=fake,split2 --dpi-desync-repeats=11 --dpi-desync-fake-tls=\"$folderPath\tls_clienthello_www_google_com.bin\" --dpi-desync-fake-quic=\"$folderPath\quic_initial_www_google_com.bin\""
 
 Write-Host "  ______                         _   " -ForegroundColor Cyan
 Write-Host " |___  /                        | |  " -ForegroundColor Cyan
