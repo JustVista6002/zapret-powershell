@@ -1,5 +1,8 @@
 googlevideo.com
 googlesyndication.com
+play.google.com
+doubleclick.net
+ggpht.com
 youtu.be
 youtube.com
 youtubei.googleapis.com
@@ -38,3 +41,6 @@ soundcloud.com
 sndcdn.com
 soundcloud.cloud
 cloudflare-ech.com
+amazon.com
+amazonaws.com
+viber.com
