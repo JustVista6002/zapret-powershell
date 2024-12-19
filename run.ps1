@@ -54,9 +54,9 @@ function Check-ProcessorArchitecture {
 }
 
 if (Check-ProcessorArchitecture) {
-    Write-Host "Processor is 64-bit." -ForegroundColor Green
+    Write-Host "CPU Architecture is 64-bit"
 } else {
-    Write-Host "Processor is not 64-bit." -ForegroundColor Red
+    Write-Host "CPU Architecture is not 64-bit"
     return
 }
 
@@ -130,7 +130,7 @@ try {
 }
 
 $GitResponse = Invoke-RestMethod -Uri "https://api.github.com/repos/DNSCrypt/dnscrypt-proxy/releases/latest"
-$DCPdownloadUrl = $GitResponse.assets | Where-Object { $_.name -match "win64.*zip" } | Select-Object -ExpandProperty browser_download_url
+$DCPdownloadUrl = $GitResponse.assets | Where-Object { $_.name -match "win64.*zip" -and $_.name -notmatch ".minisig" } | Select-Object -ExpandProperty browser_download_url
 
 $files = @(
     @{Url = "https://github.com/bol-van/zapret-win-bundle/raw/refs/heads/master/zapret-winws/WinDivert.dll"; Name = "WinDivert.dll"},
