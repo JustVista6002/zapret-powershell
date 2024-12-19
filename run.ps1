@@ -105,7 +105,9 @@ foreach ($service in $servicesToStop) {
 }
 
 if (Test-Path $folderPath) {
-    Get-ChildItem -Path $folderPath | Remove-Item -Force -ErrorAction SilentlyContinue | Out-Null
+    $items = Get-ChildItem -Path $folderPath
+    $filesToRemove = $items | Where-Object { -not $_.Extension -eq ".txt" }
+    $filesToRemove | Remove-Item -Force -ErrorAction SilentlyContinue | Out-Null
 }
 
 if (-not (Test-Path $folderPath)) {
@@ -168,11 +170,12 @@ $dnsCryptProxyPath = "$folderPath\dnscrypt-proxy.exe"
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $folderPath)
 
-$extractedPath = "$folderPath\dnscrypt-proxy-win64\dnscrypt-proxy.exe"
+$extractedPath = "$folderPath\win64\dnscrypt-proxy.exe"
 if (Test-Path $extractedPath) {
     Move-Item -Path $extractedPath -Destination $dnsCryptProxyPath -Force
     Write-Host "dnscrypt-proxy.exe extracted successfully to $dnsCryptProxyPath"
     Remove-Item -Path $zipPath -Force
+    Remove-Item -Path $folderPath\win64 -Recurse -Force -ErrorAction SilentlyContinue
 } else {
     Write-Host "Failed to extract dnscrypt-proxy.exe."
 }
