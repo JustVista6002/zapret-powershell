@@ -2,7 +2,7 @@
 > I am not responsible for any of your actions! This script is created for testing purposes.
 
 <p align="center"><img src="https://raw.githubusercontent.com/gist/Xainey/d5bde7d01dcbac51ac951810e94313aa/raw/6c858c46726541b48ddaaebab29c41c07a196394/PowerShell.svg" alt="Powershell"></p>
-<h1 align="center">zapret-powershell + DNSCrypt</h1>
+<h1 align="center">zapret-powershell (+ DNSCrypt)</h1>
 
 <p align="center">Easily download zapret using PowerShell script</p>
 
@@ -14,5 +14,9 @@
 
 ## For Windows 10-11
 1. Open Powershell as Administrator
-2. Enter: ```irm https://cutt.ly/zapret-ps | iex```
+2. Enter:
+- With DNSCrypt: ```irm https://cutt.ly/zapret-ps | iex```
+- Without DNSCrypt: ```irm https://cutt.ly/zapret-ps-no-dns | iex```
 3. Done
+
+By DNSCrypt, you can get access to blocked sites at 95% but your network speed may reduces. Try at your taste!
