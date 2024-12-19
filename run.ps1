@@ -105,9 +105,15 @@ foreach ($service in $servicesToStop) {
 }
 
 if (Test-Path $folderPath) {
-    $items = Get-ChildItem -Path $folderPath
-    $filesToRemove = $items | Where-Object { -not $_.Extension -eq ".txt" }
-    $filesToRemove | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
+    $items = Get-ChildItem -Path $folderPath -Recurse
+    $filesToRemove = $items | Where-Object { $_.PSIsContainer -eq $false -and $_.Extension -ne ".txt" }
+    foreach ($file in $filesToRemove) {
+        try {
+            Remove-Item -Path $file.FullName -Force -ErrorAction Stop
+        } catch {
+            Write-Warning "Failed to remove $($file.FullName): $_"
+        }
+    }
 } else {
     New-Item -Path $folderPath -ItemType Directory | Out-Null
 }
@@ -147,10 +153,10 @@ $files = @(
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/files/fake/tls_clienthello_www_google_com.bin"; Name = "tls_clienthello_www_google_com.bin"}
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/files/fake/quic_initial_www_google_com.bin"; Name = "quic_initial_www_google_com.bin"}
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/uninstall.cmd"; Name = "uninstall.cmd"}
-    @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/allowed-ips.txt"; Name = "allowed-ips.txt"}
-    @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/allowed-names.txt"; Name = "allowed-names.txt"}
-    @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/blocked-ips.txt"; Name = "blocked-ips.txt"}
-    @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/blocked-names.txt"; Name = "blocked-names.txt"}
+    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/allowed-ips.txt"; Name = "allowed-ips.txt"}
+    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/allowed-names.txt"; Name = "allowed-names.txt"}
+    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/blocked-ips.txt"; Name = "blocked-ips.txt"}
+    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/filesb/locked-names.txt"; Name = "blocked-names.txt"}
     @{Url = "$DCPdownloadUrl"; Name = "dnscrypt-proxy.zip"}
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/dnscrypt-proxy.toml"; Name = "dnscrypt-proxy.toml"}
 )
