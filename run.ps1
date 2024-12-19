@@ -17,10 +17,11 @@ Write-Host "   / /  / _` || '_ \ | '__|/ _ \| __|" -ForegroundColor Cyan
 Write-Host "  / /__| (_| || |_) || |  |  __/| |_ " -ForegroundColor Cyan
 Write-Host " /_____|\__,_|| .__/ |_|   \___| \__|" -ForegroundColor Cyan
 Write-Host "              | |                    " -ForegroundColor Cyan
-Write-Host "              |_|                    " -ForegroundColor Cyan
+Write-Host "              |_|                    + DNSCrypt" -ForegroundColor Cyan
 Write-Host "** github.com/sevcator/zapret-powershell"
 Write-Host "** github.com/bol-van/zapret"
 Write-Host "** github.com/bol-van/zapret-win-bundle"
+Write-Host "** github.com/DNSCrypt/dnscrypt-proxy"
 Write-Host ""
 
 function Check-Admin {
