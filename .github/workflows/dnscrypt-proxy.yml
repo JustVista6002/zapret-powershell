@@ -1,0 +1,37 @@
+name: Download latest dnscrypt-proxy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Windows 64 Binaries
+        run: |
+          curl -s https://api.github.com/repos/DNSCrypt/dnscrypt-proxy/releases/latest \
+          | grep -wo "https.*win64.*zip" | wget -qi -
+
+      - name: Unzip Archive
+        run: |
+          unzip *win64.zip
+
+      - name: Upload dnscrypt-proxy.exe
+        uses: actions/upload-artifact@v3
+        with:
+          name: dnscrypt-proxy-win64
+          path: win64/dnscrypt-proxy.exe
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add repository/files/dnscrypt-proxy.exe
+          git commit -m "Add latest dnscrypt-proxy.exe for Windows 64"
+          git push
