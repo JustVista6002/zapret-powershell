@@ -7,11 +7,9 @@ if %errorLevel% neq 0 (
 )
 
 cd "C:\Windows\System32"
-echo Killing processes
 taskkill /F /IM winws.exe /T >nul 2>&1
 taskkill /F /IM dnscrypt-proxy.exe /T >nul 2>&1
 
-echo Stopping services
 net stop winws1 >nul 2>&1
 net stop windivert >nul 2>&1
 net stop windivert14 >nul 2>&1
@@ -19,13 +17,11 @@ sc stop zapret >nul 2>&1
 sc stop windivert >nul 2>&1
 sc stop windivert14 >nul 2>&1
 sc stop dnscrypt-proxy >nul 2>&1
-echo Deleting services
 sc delete winws1 >nul 2>&1
 sc delete windivert >nul 2>&1
 sc delete windivert14 >nul 2>&1
 sc delete dnscrypt-proxy >nul 2>&1
 
-echo Cleaning Zapret folder
 set "folderPath=C:\Windows\Zapret"
 set "tempPath=C:\Windows\Temp\Zapret"
 
