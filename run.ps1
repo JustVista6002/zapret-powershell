@@ -61,6 +61,12 @@ if (Check-ProcessorArchitecture) {
     return
 }
 
+if (Test-Path "$folderPath\uninstall.cmd") {
+    & "$folderPath\uninstall.cmd"
+} else {
+    Write-Output "Hm... You don't using my zapret before"
+}
+
 Write-Host "Terminating processes"
 
 $processesToKill = @("GoodbyeDPI.exe", "winws.exe", "zapret.exe", "dnscrypt-proxy.exe")
