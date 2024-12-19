@@ -107,7 +107,7 @@ foreach ($service in $servicesToStop) {
 if (Test-Path $folderPath) {
     $items = Get-ChildItem -Path $folderPath
     $filesToRemove = $items | Where-Object { -not $_.Extension -eq ".txt" }
-    $filesToRemove | Remove-Item -Force -ErrorAction SilentlyContinue | Out-Null
+    $filesToRemove | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
 } else {
     New-Item -Path $folderPath -ItemType Directory | Out-Null
 }
