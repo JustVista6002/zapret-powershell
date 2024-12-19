@@ -157,7 +157,7 @@ $files = @(
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/allowed-ips.txt"; Name = "allowed-ips.txt"}
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/allowed-names.txt"; Name = "allowed-names.txt"}
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/blocked-ips.txt"; Name = "blocked-ips.txt"}
-    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/filesb/locked-names.txt"; Name = "blocked-names.txt"}
+    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/blocked-names.txt"; Name = "blocked-names.txt"}
     @{Url = "$DCPdownloadUrl"; Name = "dnscrypt-proxy.zip"}
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/dnscrypt-proxy.toml"; Name = "dnscrypt-proxy.toml"}
 )
