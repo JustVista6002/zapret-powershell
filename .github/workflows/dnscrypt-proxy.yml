@@ -31,6 +31,7 @@ jobs:
           mkdir -p files
           mv win64/dnscrypt-proxy.exe files/dnscrypt-proxy.exe
           rm -rf win64
+          rm -rf *.zip
 
       - name: Commit and push changes
         run: |
