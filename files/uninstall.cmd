@@ -29,15 +29,22 @@ net stop windivert14 >nul 2>&1
 sc stop zapret >nul 2>&1
 sc stop windivert >nul 2>&1
 sc stop windivert14 >nul 2>&1
-
+sc stop dnscrypt-proxy >nul 2>&1
 echo Deleting services
 sc delete winws1 >nul 2>&1
 sc delete windivert >nul 2>&1
 sc delete windivert14 >nul 2>&1
+sc delete dnscrypt-proxy >nul 2>&1
 
 echo Cleaning Zapret folder
 set "folderPath=C:\Windows\Zapret" >nul 2>&1
 if exist "%folderPath%" rd /s /q "%folderPath%" >nul 2>&1
+
+for /f "tokens=2 delims=," %%i in ('wmic nic where "NetConnectionStatus=2" get NetConnectionID ^| findstr /r /v "^$"') do (
+    netsh interface ipv4 set dns name="%%i" source=dhcp
+    netsh interface ipv6 set dns name="%%i" source=dhcp
+    echo DNS settings reverted for interface: %%i
+)
 
 echo Done!
 echo.
