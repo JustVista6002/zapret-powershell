@@ -213,9 +213,9 @@ try {
 
 $adapters = Get-NetAdapter | Where-Object { $_.Status -eq "Up" }
 foreach ($adapter in $adapters) {
-    Set-DnsClientServerAddress -InterfaceAlias $adapter.Name -ServerAddresses 127.0.0.1
+    Set-NetIPInterface -InterfaceAlias $adapter.Name -Dhcp Enabled
 }
-Write-Host "Primary DNS 127.0.0.1 is installed on all Internet adapters"
+Write-Host "DHCP is enabled on all Internet adapters"
 
 Write-Host ""
 Write-Host "Done! Now enjoy."
