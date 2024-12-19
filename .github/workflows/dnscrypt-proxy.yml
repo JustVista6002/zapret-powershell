@@ -13,20 +13,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
       - name: Download Windows 64 Binaries
         run: |
-          curl -s https://api.github.com/repos/DNSCrypt/dnscrypt-proxy/releases/latest \
-          | grep -wo "https.*win64.*zip" | wget -qi -
+          URL=$(curl -s https://api.github.com/repos/DNSCrypt/dnscrypt-proxy/releases/latest \
+          | jq -r '.assets[] | select(.name | test("win64.*zip")) | .browser_download_url')
+          wget -q $URL -O dnscrypt-proxy-win64.zip
 
       - name: Unzip Archive
         run: |
-          unzip *win64.zip
+          unzip dnscrypt-proxy-win64.zip
 
-      - name: Upload dnscrypt-proxy.exe
-        uses: actions/upload-artifact@v3
-        with:
-          name: dnscrypt-proxy-win64
-          path: win64/dnscrypt-proxy.exe
+      - name: Move dnscrypt-proxy.exe to repository/files
+        run: |
+          mkdir -p repository/files
+          mv win64/dnscrypt-proxy.exe repository/files/
 
       - name: Commit and push changes
         run: |
