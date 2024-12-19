@@ -25,12 +25,17 @@ jobs:
       - name: Unzip Archive
         run: |
           unzip dnscrypt-proxy-win64.zip
-          git mv win64 files
+
+      - name: Move dnscrypt-proxy.exe to files directory
+        run: |
+          mkdir -p files
+          mv win64/dnscrypt-proxy.exe files/dnscrypt-proxy.exe
+          rm -rf win64
 
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
-          git commit -m "Rename folder win64 to files"
+          git commit -m "Update dnscrypt-proxy.exe"
           git push https://${{ secrets.GH_PAT }}@github.com/sevcator/zapret-powershell.git main
