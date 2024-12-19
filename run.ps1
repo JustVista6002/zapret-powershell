@@ -37,8 +37,6 @@ if (-not (Check-Admin)) {
 
 $initialDirectory = Get-Location
 
-Write-Host "--- START INSTALLATION ---"
-
 $version = [System.Environment]::OSVersion.Version
 
 $windows10Version = New-Object System.Version(10, 0)
@@ -52,7 +50,7 @@ if ($version -gt $windows10Version) {
 
 Write-Host "Terminating processes"
 
-$processesToKill = @("GoodbyeDPI.exe", "winws.exe", "zapret.exe")
+$processesToKill = @("GoodbyeDPI.exe", "winws.exe", "zapret.exe", "dnscrypt-proxy.exe")
 
 foreach ($process in $processesToKill) {
     try {
@@ -68,7 +66,7 @@ foreach ($process in $processesToKill) {
 }
 
 Write-Host "Checking services"
-$servicesToStop = @("zapret", "winws1", "goodbyedpi", "windivert", "windivert14")
+$servicesToStop = @("zapret", "winws1", "goodbyedpi", "windivert", "windivert14", "dnscrypt-proxy")
 foreach ($service in $servicesToStop) {
     $serviceStatus = Get-Service -Name $service -ErrorAction SilentlyContinue
 
@@ -130,6 +128,12 @@ $files = @(
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/files/fake/tls_clienthello_www_google_com.bin"; Name = "tls_clienthello_www_google_com.bin"}
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/files/fake/quic_initial_www_google_com.bin"; Name = "quic_initial_www_google_com.bin"}
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/uninstall.cmd"; Name = "uninstall.cmd"}
+    @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/allowed-ips.txt"; Name = "allowed-ips.txt"}
+    @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/allowed-names.txt"; Name = "allowed-names.txt"}
+    @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/blocked-ips.txt"; Name = "blocked-ips.txt"}
+    @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/blocked-names.txt"; Name = "blocked-names.txt"}
+    @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/dnscrypt-proxy.exe"; Name = "dnscrypt-proxy.exe"}
+    @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/dnscrypt-proxy.toml"; Name = "dnscrypt-proxy.toml"}
 )
 
 foreach ($file in $files) {
@@ -143,26 +147,35 @@ foreach ($file in $files) {
 
 Set-Location $folderPath | Out-Null
 
+$adapters = Get-NetAdapter | Where-Object { $_.Status -eq "Up" }
+foreach ($adapter in $adapters) {
+    Set-DnsClientServerAddress -InterfaceAlias $adapter.Name -ServerAddresses 127.0.0.1
+    Write-Host "Set Primary DNS Server 127.0.0.1 to all Network adapters"
+}
+
 try {
     sc.exe create winws1 binPath= "`"$folderPath\winws.exe $ARGS`"" DisplayName= "zapret DPI bypass" start= auto | Out-Null
     sc.exe start winws1 | Out-Null
-    Write-Host "Service created and started!"
+    Write-Host "Service winws1 created and started!"
 } catch {
     Write-Host ("Failed to create or start service: {0}" -f $_.Exception.Message) -ForegroundColor Red
 }
 
-Write-Host "--- END OF INSTALLATION ---"
+try {
+    sc.exe create dnscrypt-proxy binPath= "$folderPath\dnscrypt-proxy.exe $folderPath\dnscrypt-proxy.toml" DisplayName= "DNSCrypt Proxy" start= auto | Out-Null
+    sc.exe start dnscrypt-proxy | Out-Null
+    Write-Host "Service dnscrypt-proxy created and started!"
+} catch {
+    Write-Host ("Failed to create or start service: {0}" -f $_.Exception.Message) -ForegroundColor Red
+}
+
 Write-Host ""
 Write-Host "Done! Now enjoy."
 Write-Host "To remove Zapret, run script located in $folderPath\uninstall.cmd as administrator!" -ForegroundColor Yellow
 Write-Host ""
-Write-Host "--- NOTES ---"
-Write-Host ""
-Write-Host "!! Have a problems with YouTube and something? Try fix your browser: set to default flags in experemental features (if you do something) or enable Secure DNS (example: 1.1.1.1 or OpenDNS)" -ForegroundColor Gray
-Write-Host "!! If Discord stucks on 'Checking for updates...' terminate process and open again" -ForegroundColor Gray
-Write-Host ""
+Write-Host "!!! If Discord stucks on 'Checking for updates...' terminate process and open again" -ForegroundColor Gray
 Write-Host "!!! On some providers this DPI Bypass may not working! Uninstall and use VPN or something else (try other zapret)" -ForegroundColor Gray
 Write-Host ""
-Write-Host "Follow me ** sevcator.github.io"
+Write-Host "Follow me ** sevcator.github.io & sevcator.t.me"
 Write-Host ""
 Set-Location $initialDirectory
