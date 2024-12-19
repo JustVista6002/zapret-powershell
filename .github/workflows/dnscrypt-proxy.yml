@@ -1,4 +1,4 @@
-name: Download latest dnscrypt-proxy
+name: Download dnscrypt-proxy to repository
 
 on:
   push:
