@@ -6,9 +6,9 @@ Clear-Host
 # Modifable vars
 $folderPath = "C:\Windows\Zapret"
 $ARGS = "--wf-tcp=80,443 --wf-udp=80,443,50000-50099 "
-$ARGS += "--filter-tcp=80,443 --hostlist-auto=`"$folderPath\autohostlist.txt`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=60 --hostlist-auto-retrans-threshold=2 --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --dpi-desync-fake-quic=`"$folderPath\quic_initial_www_google_com.bin`" --new "
+$ARGS += "--filter-tcp=80,443 --hostlist-auto=`"$folderPath\autohostlist.txt`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=60 --hostlist-auto-retrans-threshold=2 --hostlist-exclude=`"$folderPath\exclude.txt`" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --dpi-desync-fake-quic=`"$folderPath\quic_initial_www_google_com.bin`" --new "
 $ARGS += "--filter-udp=50000-50099 --ipset=`"$folderPath\ipset-discord.txt`" --dpi-desync=fake --dpi-desync-repeats=11 --dpi-desync-any-protocol --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --dpi-desync-fake-quic=`"$folderPath\quic_initial_www_google_com.bin`" --new "
-$ARGS += "--filter-udp=80,443 --hostlist-auto=`"$folderPath\autohostlist.txt`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=60 --hostlist-auto-retrans-threshold=2 --dpi-desync=fake,split2 --dpi-desync-repeats=11 --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --dpi-desync-fake-quic=`"$folderPath\quic_initial_www_google_com.bin`""
+$ARGS += "--filter-udp=80,443 --hostlist-auto=`"$folderPath\autohostlist.txt`" --hostlist-auto-fail-threshold=2 --hostlist-auto-fail-time=60 --hostlist-auto-retrans-threshold=2 --hostlist-exclude=`"$folderPath\exclude.txt`" --dpi-desync=fake,split2 --dpi-desync-repeats=11 --dpi-desync-fake-tls=`"$folderPath\tls_clienthello_www_google_com.bin`" --dpi-desync-fake-quic=`"$folderPath\quic_initial_www_google_com.bin`""
 
 Write-Host "  ______                         _   " -ForegroundColor Cyan
 Write-Host " |___  /                        | |  " -ForegroundColor Cyan
@@ -45,6 +45,18 @@ if ($version -gt $windows10Version) {
     Write-Output "Windows version: $version"
 } else {
     Write-Host "Your version of Windows is old!" -ForegroundColor White
+    return
+}
+
+function Check-ProcessorArchitecture {
+    $processor = Get-WmiObject -Class Win32_Processor
+    return $processor.AddressWidth -eq 64
+}
+
+if (Check-ProcessorArchitecture) {
+    Write-Host "Processor is 64-bit." -ForegroundColor Green
+} else {
+    Write-Host "Processor is not 64-bit." -ForegroundColor Red
     return
 }
 
@@ -117,6 +129,8 @@ try {
     Write-Host ("${exclusionPath}: Error to add exclusion - {0}" -f $_.Exception.Message) -ForegroundColor Red
 }
 
+$GitResponse = Invoke-RestMethod -Uri "https://api.github.com/repos/DNSCrypt/dnscrypt-proxy/releases/latest"
+$DCPdownloadUrl = $GitResponse.assets | Where-Object { $_.name -match "win64.*zip" } | Select-Object -ExpandProperty browser_download_url
 
 $files = @(
     @{Url = "https://github.com/bol-van/zapret-win-bundle/raw/refs/heads/master/zapret-winws/WinDivert.dll"; Name = "WinDivert.dll"},
@@ -125,6 +139,7 @@ $files = @(
     @{Url = "https://github.com/bol-van/zapret-win-bundle/raw/refs/heads/master/zapret-winws/winws.exe"; Name = "winws.exe"},
     @{Url = "https://raw.githubusercontent.com/bol-van/zapret-win-bundle/refs/heads/master/zapret-winws/ipset-discord.txt"; Name = "ipset-discord.txt"},
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/autohostlist.txt"; Name = "autohostlist.txt"},
+    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/exclude.txt"; Name = "exclude.txt"},
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/files/fake/tls_clienthello_www_google_com.bin"; Name = "tls_clienthello_www_google_com.bin"}
     @{Url = "https://github.com/bol-van/zapret/raw/refs/heads/master/files/fake/quic_initial_www_google_com.bin"; Name = "quic_initial_www_google_com.bin"}
     @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/uninstall.cmd"; Name = "uninstall.cmd"}
@@ -132,7 +147,7 @@ $files = @(
     @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/allowed-names.txt"; Name = "allowed-names.txt"}
     @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/blocked-ips.txt"; Name = "blocked-ips.txt"}
     @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/blocked-names.txt"; Name = "blocked-names.txt"}
-    @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/dnscrypt-proxy.exe"; Name = "dnscrypt-proxy.exe"}
+    @{Url = "$DCPdownloadUrl"; Name = "dnscrypt-proxy.zip"}
     @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/dnscrypt-proxy.toml"; Name = "dnscrypt-proxy.toml"}
 )
 
@@ -147,10 +162,19 @@ foreach ($file in $files) {
 
 Set-Location $folderPath | Out-Null
 
-$adapters = Get-NetAdapter | Where-Object { $_.Status -eq "Up" }
-foreach ($adapter in $adapters) {
-    Set-DnsClientServerAddress -InterfaceAlias $adapter.Name -ServerAddresses 127.0.0.1
-    Write-Host "Set Primary DNS Server 127.0.0.1 to all Network adapters"
+$zipPath = "$folderPath\dnscrypt-proxy.zip"
+$dnsCryptProxyPath = "$folderPath\dnscrypt-proxy.exe"
+
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+[System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $folderPath)
+
+$extractedPath = "$folderPath\dnscrypt-proxy-win64\dnscrypt-proxy.exe"
+if (Test-Path $extractedPath) {
+    Move-Item -Path $extractedPath -Destination $dnsCryptProxyPath -Force
+    Write-Host "dnscrypt-proxy.exe extracted successfully to $dnsCryptProxyPath"
+    Remove-Item -Path $zipPath -Force
+} else {
+    Write-Host "Failed to extract dnscrypt-proxy.exe."
 }
 
 try {
@@ -168,6 +192,12 @@ try {
 } catch {
     Write-Host ("Failed to create or start service: {0}" -f $_.Exception.Message) -ForegroundColor Red
 }
+
+$adapters = Get-NetAdapter | Where-Object { $_.Status -eq "Up" }
+foreach ($adapter in $adapters) {
+    Set-DnsClientServerAddress -InterfaceAlias $adapter.Name -ServerAddresses 127.0.0.1
+}
+Write-Host "Primary DNS 127.0.0.1 is installed on all Internet adapters"
 
 Write-Host ""
 Write-Host "Done! Now enjoy."
