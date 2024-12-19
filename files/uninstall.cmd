@@ -21,6 +21,7 @@ if %errorLevel% neq 0 (
 cd "C:\Windows\System32"
 echo Killing processes
 taskkill /F /IM winws.exe /T >nul 2>&1
+taskkill /F /IM dnscrypt-proxy.exe /T >nul 2>&1
 
 echo Stopping services
 net stop winws1 >nul 2>&1
@@ -36,17 +37,21 @@ sc delete windivert >nul 2>&1
 sc delete windivert14 >nul 2>&1
 sc delete dnscrypt-proxy >nul 2>&1
 
-echo Cleaning Zapret folder
-set "folderPath=C:\Windows\Zapret" >nul 2>&1
-if exist "%folderPath%" rd /s /q "%folderPath%" >nul 2>&1
+set "folderPath=C:\Windows\Zapret"
+set "tempPath=C:\Windows\Temp\Zapret"
+
+if exist "%folderPath%" (
+    move "%folderPath%\*.txt" "%tempPath%" >nul 2>&1
+    rd /s /q "%folderPath%" >nul 2>&1
+    mkdir "%folderPath%" >nul 2>&1
+    move "%tempPath%\*.txt" "%folderPath%" >nul 2>&1
+    rd /s /q "%tempPath%" >nul 2>&1
+)
 
 for /f "tokens=2 delims=," %%i in ('wmic nic where "NetConnectionStatus=2" get NetConnectionID ^| findstr /r /v "^$"') do (
     netsh interface ipv4 set dns name="%%i" source=dhcp
     netsh interface ipv6 set dns name="%%i" source=dhcp
     echo DNS settings reverted for interface: %%i
 )
-
-echo Done!
-echo.
 
 echo Done
