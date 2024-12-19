@@ -37,6 +37,7 @@ sc delete windivert >nul 2>&1
 sc delete windivert14 >nul 2>&1
 sc delete dnscrypt-proxy >nul 2>&1
 
+echo Cleaning Zapret folder
 set "folderPath=C:\Windows\Zapret"
 set "tempPath=C:\Windows\Temp\Zapret"
 
