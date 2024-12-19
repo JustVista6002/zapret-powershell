@@ -152,7 +152,7 @@ $files = @(
     @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/blocked-ips.txt"; Name = "blocked-ips.txt"}
     @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/blocked-names.txt"; Name = "blocked-names.txt"}
     @{Url = "$DCPdownloadUrl"; Name = "dnscrypt-proxy.zip"}
-    @{Url = "https://github.com/sevcator/zapret-powershell/blob/main/files/dnscrypt-proxy.toml"; Name = "dnscrypt-proxy.toml"}
+    @{Url = "https://raw.githubusercontent.com/sevcator/zapret-powershell/refs/heads/main/files/dnscrypt-proxy.toml"; Name = "dnscrypt-proxy.toml"}
 )
 
 foreach ($file in $files) {
