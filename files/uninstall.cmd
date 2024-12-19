@@ -1,17 +1,5 @@
 @echo off
 
-echo Z)zzzzzz                           t)   
-echo       Z)                         t)tTTT 
-echo     Z) a)AAAA p)PPPP  r)RRR e)EEEEEt)   
-echo    Z)   a)AAA p)   PPr)   RRe)EEEE t)   
-echo  Z)    a)   A p)   PPr)     e)     t)   
-echo Z)zzzzzza)AAAAp)PPPP r)      e)EEEEt)T  
-echo               p)                        
-echo               p)           
-echo Script - github.com/sevcator/zapret-powershell
-echo Zapret - github.com/bol-van/zapret
-echo.
-
 net session >nul 2>&1
 if %errorLevel% neq 0 (
     echo You must run this script with administrative privileges to countinue.
