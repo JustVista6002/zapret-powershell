@@ -108,6 +108,8 @@ if (Test-Path $folderPath) {
     $items = Get-ChildItem -Path $folderPath
     $filesToRemove = $items | Where-Object { -not $_.Extension -eq ".txt" }
     $filesToRemove | Remove-Item -Force -ErrorAction SilentlyContinue | Out-Null
+} else {
+    New-Item -Path $folderPath -ItemType Directory | Out-Null
 }
 
 if (-not (Test-Path $folderPath)) {
@@ -175,7 +177,7 @@ if (Test-Path $extractedPath) {
     Move-Item -Path $extractedPath -Destination $dnsCryptProxyPath -Force
     Write-Host "dnscrypt-proxy.exe extracted successfully to $dnsCryptProxyPath"
     Remove-Item -Path $zipPath -Force
-    Remove-Item -Path $folderPath\win64 -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path "$folderPath\win64" -Recurse -Force -ErrorAction SilentlyContinue
 } else {
     Write-Host "Failed to extract dnscrypt-proxy.exe."
 }
