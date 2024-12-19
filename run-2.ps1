@@ -177,6 +177,11 @@ try {
     Write-Host ("Failed to create or start service: {0}" -f $_.Exception.Message) -ForegroundColor Red
 }
 
+foreach ($adapter in $adapters) {
+    Set-NetIPInterface -InterfaceAlias $adapter.Name -Dhcp Enabled
+}
+Write-Host "DHCP is enabled on all Internet adapters"
+
 Write-Host ""
 Write-Host "Done! Now enjoy."
 Write-Host "To remove Zapret, run script located in $folderPath\uninstall.cmd as administrator!" -ForegroundColor Yellow
