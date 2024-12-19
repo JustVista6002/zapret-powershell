@@ -62,7 +62,7 @@ if (Check-ProcessorArchitecture) {
 }
 
 if (Test-Path "$folderPath\uninstall.cmd") {
-    & "$folderPath\uninstall.cmd"
+    & "$folderPath\uninstall.cmd" | Out-Null
 } else {
     Write-Output "Hm... You don't using my zapret before"
 }
