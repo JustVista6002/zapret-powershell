@@ -25,12 +25,11 @@ jobs:
       - name: Unzip Archive
         run: |
           unzip dnscrypt-proxy-win64.zip
-          mv win64 files
 
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add files/dnscrypt-proxy.exe
+          git add win64/dnscrypt-proxy.exe
           git commit -m "Add latest dnscrypt-proxy.exe for Windows 64"
           git push origin main
