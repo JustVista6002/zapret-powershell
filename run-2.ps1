@@ -66,6 +66,19 @@ if (Test-Path "$folderPath\uninstall.cmd") {
     Write-Output "Hm... You don't using my zapret before"
 }
 
+$adapters = Get-NetAdapter | Where-Object { $_.Status -eq "Up" }
+foreach ($adapter in $adapters) {
+    $ipAddresses = (Get-NetIPAddress -InterfaceAlias $adapter.Name -AddressFamily IPv4).IPAddress
+
+    if ($ipAddresses -contains "127.0.0.1") {
+        Set-NetIPInterface -InterfaceAlias $adapter.Name -Dhcp Enabled
+        Write-Host "Enabled DHCP on adapter $($adapter.Name) because it had IP 127.0.0.1"
+    }
+    else {
+        Write-Host "Adapter $($adapter.Name) does not have IP 127.0.0.1"
+    }
+}
+
 Write-Host "Terminating processes"
 
 $processesToKill = @("GoodbyeDPI.exe", "winws.exe", "zapret.exe", "dnscrypt-proxy.exe")
@@ -176,11 +189,6 @@ try {
 } catch {
     Write-Host ("Failed to create or start service: {0}" -f $_.Exception.Message) -ForegroundColor Red
 }
-
-foreach ($adapter in $adapters) {
-    Set-NetIPInterface -InterfaceAlias $adapter.Name -Dhcp Enabled
-}
-Write-Host "DHCP is enabled on all Internet adapters"
 
 Write-Host ""
 Write-Host "Done! Now enjoy."
