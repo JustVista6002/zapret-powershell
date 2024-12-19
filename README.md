@@ -18,5 +18,3 @@
 - With DNSCrypt: ```irm https://cutt.ly/zapret-ps | iex```
 - Without DNSCrypt: ```irm https://cutt.ly/zapret-ps-no-dns | iex```
 3. Done
-
-By DNSCrypt, you can get access to blocked sites at 95% but your network speed may reduces. Try at your taste!
