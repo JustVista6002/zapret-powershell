@@ -15,6 +15,6 @@
 ## For Windows 10-11
 1. Open Powershell as Administrator
 2. Enter:
-- With DNSCrypt: ```irm https://cutt.ly/zapret-ps | iex```
-- Without DNSCrypt: ```irm https://cutt.ly/zapret-ps-no-dns | iex```
+- Without DNSCrypt: ```irm https://bit.ly/sev-zapret | iex```
+- With DNSCrypt: ```irm https://bit.ly/sev-zapret-dns | iex```
 3. Done
