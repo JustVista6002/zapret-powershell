@@ -5,7 +5,7 @@ Clear-Host
 $folderPath = "C:\Windows\Zapret"
 $hostlist = "--hostlist-exclude=`"$folderPath\exclude.txt`" --hostlist-auto=`"$folderPath\autohostlist.txt`""
 $ARGS = "--wf-tcp=80,443 --wf-udp=80,443,50000-50099 "
-$ARGS += "--filter-tcp=80 --dpi-desync=fake,fakedsplit --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls.bin`" $hostist --new "
+$ARGS += "--filter-tcp=80 --dpi-desync=fake,fakedsplit --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls.bin`" $hostlist --new "
 $ARGS += "--filter-tcp=443 --hostlist=`"$folderPath\google.txt`" --dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls.bin`" --new "
 $ARGS += "--filter-tcp=80 --hostlist=`"$folderPath\google.txt`" --dpi-desync=fake,multidisorder --dpi-desync-split-pos=1,midsld --dpi-desync-repeats=11 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=`"$folderPath\tls.bin`" --new "
 $ARGS += "--filter-tcp=443 --dpi-desync=fake,multidisorder --dpi-desync-split-pos=midsld --dpi-desync-repeats=6 --dpi-desync-fooling=badseq,md5sig --dpi-desync-fake-tls=`"$folderPath\tls.bin`" $hostlist --new "
