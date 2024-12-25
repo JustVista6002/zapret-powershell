@@ -57,15 +57,15 @@ if (Test-Path "$folderPath\uninstall.cmd") {
 }
 
 Write-Host "- Terminating processes"
-$processesToKill = @("GoodbyeDPI.exe", "winws.exe", "zapret.exe", "dnscrypt-proxy.exe")
+$processesToKill = @("GoodbyeDPI.exe", "winws.exe", "zapret.exe")
 foreach ($process in $processesToKill) {
     Stop-Process -Name $process -Force -ErrorAction Stop SilentlyContinue | Out-Null
 }
 
 Write-Host "- Removing services"
-$servicesToStop = @("zapret", "winws1", "goodbyedpi", "windivert", "windivert14", "dnscrypt-proxy")
+$servicesToStop = @("zapret", "winws1", "goodbyedpi", "windivert", "windivert14")
 foreach ($service in $servicesToStop) {
-    $serviceStatus = Get-Service -Name $service -ErrorAction SilentlyContinue
+    $serviceStatus = Get-Service -Name $service -ErrorAction SilentlyContinue | Out-Null
 
     if ($serviceStatus) {
         try {
