@@ -53,21 +53,13 @@ if (Check-ProcessorArchitecture) {
     return
 }
 if (Test-Path "$folderPath\uninstall.cmd") {
-    & "$folderPath\uninstall.cmd" | Out-Null
+    & "$folderPath\uninstall.cmd" *> $null
 }
 
 Write-Host "- Terminating processes"
 $processesToKill = @("GoodbyeDPI.exe", "winws.exe", "zapret.exe", "dnscrypt-proxy.exe")
 foreach ($process in $processesToKill) {
-    try {
-        Stop-Process -Name $process -Force -ErrorAction Stop
-    } catch {
-        if ($_.Exception.Message -like "*not running*") {
-
-        } else {
-            Write-Host ("{0}: {1}" -f $process, $_.Exception.Message) -ForegroundColor White
-        }
-    }
+    Stop-Process -Name $process -Force -ErrorAction Stop | Out-Null
 }
 
 Write-Host "- Removing services"
@@ -89,7 +81,7 @@ foreach ($service in $servicesToStop) {
 	    Write-Host "If you have problems, try restart your machine!" -ForegroundColor Yellow
         }
     } else {
-        Write-Host "${service}: Not found" -ForegroundColor White
+    
     }
 }
 if (Test-Path $folderPath) {
@@ -152,7 +144,7 @@ try {
     Write-Host ("Failed to create or start service: {0}" -f $_.Exception.Message) -ForegroundColor Red
 }
 
-Write-Host "*** sevcator.t.me / sevcator.github.io ***"
 Write-Host "- Done!"
 Write-Host "- To remove Zapret, run script located in $folderPath\uninstall.cmd as administrator!"
+Write-Host "*** sevcator.t.me / sevcator.github.io ***"
 Set-Location $initialDirectory
