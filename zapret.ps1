@@ -59,7 +59,7 @@ if (Test-Path "$folderPath\uninstall.cmd") {
 Write-Host "- Terminating processes"
 $processesToKill = @("GoodbyeDPI.exe", "winws.exe", "zapret.exe")
 foreach ($process in $processesToKill) {
-    Stop-Process -Name $process -Force -ErrorAction Stop SilentlyContinue | Out-Null
+    Stop-Process -Name $process -Force -ErrorAction SilentlyContinue | Out-Null
 }
 
 Write-Host "- Removing services"
