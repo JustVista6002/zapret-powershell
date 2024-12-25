@@ -110,7 +110,7 @@ try {
     Add-MpPreference -ExclusionPath $exclusionPath
     Start-Sleep -Seconds 5
 } catch {
-    Write-Host ("Failed to add exclusion: {0}" -f $_.Exception.Message) -ForegroundColor Red
+    Write-Host ("- Error adding exclusion") -ForegroundColor Yellow
 }
 
 Write-Host "- Downloading files"
